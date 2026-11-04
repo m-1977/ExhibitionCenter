@@ -1,0 +1,31 @@
+﻿<Window x:Class="VlcSmokeTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vlc="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
+        Title="LibVLC Video Test"
+        Width="1200"
+        Height="760"
+        WindowStartupLocation="CenterScreen"
+        Background="#111111">
+
+    <Grid Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="75"/>
+        </Grid.RowDefinitions>
+
+        <vlc:VideoView x:Name="VideoView"/>
+
+        <TextBlock x:Name="StatusText"
+                   Grid.Row="1"
+                   Text="Starting..."
+                   Foreground="#E2B258"
+                   FontSize="24"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+
+    </Grid>
+
+</Window>

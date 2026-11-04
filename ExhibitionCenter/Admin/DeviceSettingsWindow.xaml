@@ -1,0 +1,835 @@
+﻿<Window x:Class="ExhibitionCenter.Admin.DeviceSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="إدارة الأجهزة"
+        Width="1700"
+        Height="940"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Background="#0D0C0A"
+        FontFamily="Segoe UI"
+        FlowDirection="LeftToRight">
+
+    <Window.Resources>
+
+        <!-- PROJECT BUTTON -->
+
+        <Style x:Key="ProjectButtonStyle"
+               TargetType="Button">
+
+            <Setter Property="Height"
+                    Value="55"/>
+
+            <Setter Property="Foreground"
+                    Value="White"/>
+
+            <Setter Property="Background"
+                    Value="#241F18"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#A8CFA75B"/>
+
+            <Setter Property="BorderThickness"
+                    Value="1.5"/>
+
+            <Setter Property="FontSize"
+                    Value="18"/>
+
+            <Setter Property="FontWeight"
+                    Value="SemiBold"/>
+
+            <Setter Property="Cursor"
+                    Value="Hand"/>
+
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="Button">
+
+                        <Border x:Name="ButtonBorder"
+                                CornerRadius="18"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+
+                        </Border>
+
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Background"
+                                        Value="#392E20"/>
+
+                                <Setter TargetName="ButtonBorder"
+                                        Property="BorderBrush"
+                                        Value="#E3BD67"/>
+
+                            </Trigger>
+
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Background"
+                                        Value="#4A3924"/>
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+
+            </Setter>
+
+        </Style>
+
+
+        <!-- TEXT BOX -->
+
+        <Style TargetType="TextBox">
+
+            <Setter Property="Height"
+                    Value="52"/>
+
+            <Setter Property="Foreground"
+                    Value="White"/>
+
+            <Setter Property="Background"
+                    Value="#201C16"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#80CFA75B"/>
+
+            <Setter Property="BorderThickness"
+                    Value="1.4"/>
+
+            <Setter Property="FontSize"
+                    Value="18"/>
+
+            <Setter Property="Padding"
+                    Value="14,7"/>
+
+            <Setter Property="CaretBrush"
+                    Value="White"/>
+
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center"/>
+
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="TextBox">
+
+                        <Border CornerRadius="13"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="{TemplateBinding Padding}"/>
+
+                        </Border>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+
+            </Setter>
+
+        </Style>
+
+
+        <!-- VERTICAL SLIDER ITEM -->
+
+        <Style x:Key="SliderItemStyle"
+               TargetType="ListBoxItem">
+
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Stretch"/>
+
+            <Setter Property="Padding"
+                    Value="0"/>
+
+            <Setter Property="Margin"
+                    Value="0,0,0,12"/>
+
+            <Setter Property="Focusable"
+                    Value="True"/>
+
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="ListBoxItem">
+
+                        <Border x:Name="Card"
+                                MinHeight="82"
+                                CornerRadius="17"
+                                BorderBrush="#65CFA75B"
+                                BorderThickness="1.2"
+                                Background="#241F18"
+                                Padding="14">
+
+                            <ContentPresenter/>
+
+                        </Border>
+
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+
+                                <Setter TargetName="Card"
+                                        Property="Background"
+                                        Value="#30281D"/>
+
+                            </Trigger>
+
+
+                            <Trigger Property="IsSelected"
+                                     Value="True">
+
+                                <Setter TargetName="Card"
+                                        Property="Background"
+                                        Value="#352A1D"/>
+
+                                <Setter TargetName="Card"
+                                        Property="BorderBrush"
+                                        Value="#E8BE60"/>
+
+                                <Setter TargetName="Card"
+                                        Property="BorderThickness"
+                                        Value="2.2"/>
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+
+            </Setter>
+
+        </Style>
+
+    </Window.Resources>
+
+
+    <Border Margin="12"
+            Padding="26"
+            CornerRadius="26"
+            BorderBrush="#75CFA75B"
+            BorderThickness="1.4"
+            Background="#0D0C0A">
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="82"/>
+
+                <RowDefinition Height="*"/>
+
+                <RowDefinition Height="84"/>
+
+            </Grid.RowDefinitions>
+
+
+            <!-- HEADER -->
+
+            <Grid Grid.Row="0">
+
+                <TextBlock Text="إدارة الأجهزة"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Foreground="#E7C478"
+                           FontSize="34"
+                           FontWeight="SemiBold"
+                           FlowDirection="RightToLeft"/>
+
+
+                <TextBlock Text="الصورة • الفيديو • معلومات الجهاز"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           Foreground="#AFA48F"
+                           FontSize="17"
+                           FlowDirection="RightToLeft"/>
+
+            </Grid>
+
+
+            <!-- MAIN BODY -->
+
+            <Grid Grid.Row="1">
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="270"/>
+
+                    <ColumnDefinition Width="22"/>
+
+                    <ColumnDefinition Width="330"/>
+
+                    <ColumnDefinition Width="22"/>
+
+                    <ColumnDefinition Width="*"/>
+
+                </Grid.ColumnDefinitions>
+
+
+                <!-- CATEGORIES -->
+
+                <Border Grid.Column="0"
+                        CornerRadius="22"
+                        BorderBrush="#70CFA75B"
+                        BorderThickness="1.4"
+                        Background="#15120E"
+                        Padding="14">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="55"/>
+
+                            <RowDefinition Height="*"/>
+
+                        </Grid.RowDefinitions>
+
+
+                        <TextBlock Text="الأقسام"
+                                   Foreground="#E7C478"
+                                   FontSize="23"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   FlowDirection="RightToLeft"/>
+
+
+                        <ListBox x:Name="CategoryList"
+                                 Grid.Row="1"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 ItemContainerStyle="{StaticResource SliderItemStyle}"
+                                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ScrollViewer.PanningMode="VerticalOnly"
+                                 ScrollViewer.CanContentScroll="False"
+                                 SelectionChanged="CategoryList_SelectionChanged"
+                                 PreviewMouseLeftButtonDown="VerticalList_MouseDown"
+                                 PreviewMouseMove="VerticalList_MouseMove"
+                                 PreviewMouseLeftButtonUp="VerticalList_MouseUp"
+                                 PreviewMouseWheel="VerticalList_MouseWheel">
+
+                            <ListBox.ItemTemplate>
+
+                                <DataTemplate>
+
+                                    <StackPanel FlowDirection="RightToLeft">
+
+                                        <TextBlock Text="{Binding Name}"
+                                                   Foreground="White"
+                                                   FontSize="19"
+                                                   FontWeight="SemiBold"/>
+
+
+                                        <TextBlock Text="{Binding Subtitle}"
+                                                   Foreground="#AFA48F"
+                                                   FontSize="13"
+                                                   Margin="0,5,0,0"
+                                                   TextTrimming="CharacterEllipsis"/>
+
+                                    </StackPanel>
+
+                                </DataTemplate>
+
+                            </ListBox.ItemTemplate>
+
+                        </ListBox>
+
+                    </Grid>
+
+                </Border>
+
+
+                <!-- DEVICES -->
+
+                <Border Grid.Column="2"
+                        CornerRadius="22"
+                        BorderBrush="#70CFA75B"
+                        BorderThickness="1.4"
+                        Background="#15120E"
+                        Padding="14">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="55"/>
+
+                            <RowDefinition Height="*"/>
+
+                        </Grid.RowDefinitions>
+
+
+                        <TextBlock Text="الأجهزة"
+                                   Foreground="#E7C478"
+                                   FontSize="23"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   FlowDirection="RightToLeft"/>
+
+
+                        <ListBox x:Name="DeviceList"
+                                 Grid.Row="1"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 ItemContainerStyle="{StaticResource SliderItemStyle}"
+                                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ScrollViewer.PanningMode="VerticalOnly"
+                                 ScrollViewer.CanContentScroll="False"
+                                 PreviewMouseLeftButtonDown="VerticalList_MouseDown"
+                                 PreviewMouseMove="VerticalList_MouseMove"
+                                 PreviewMouseLeftButtonUp="VerticalList_MouseUp"
+                                 PreviewMouseWheel="VerticalList_MouseWheel">
+
+                            <ListBox.ItemTemplate>
+
+                                <DataTemplate>
+
+                                    <Grid>
+
+                                        <Grid.ColumnDefinitions>
+
+                                            <ColumnDefinition Width="54"/>
+
+                                            <ColumnDefinition Width="*"/>
+
+                                        </Grid.ColumnDefinitions>
+
+
+                                        <Border Width="42"
+                                                Height="42"
+                                                CornerRadius="21"
+                                                BorderBrush="#8FCFA75B"
+                                                BorderThickness="1.2"
+                                                Background="#17130F">
+
+                                            <TextBlock Text="{Binding Icon}"
+                                                       FontFamily="Segoe UI Emoji"
+                                                       FontSize="20"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+
+                                        </Border>
+
+
+                                        <StackPanel Grid.Column="1"
+                                                    VerticalAlignment="Center"
+                                                    FlowDirection="RightToLeft">
+
+                                            <TextBlock Text="{Binding Name}"
+                                                       Foreground="White"
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       TextTrimming="CharacterEllipsis"/>
+
+
+                                            <TextBlock Text="{Binding Year}"
+                                                       Foreground="#D0AC61"
+                                                       FontSize="13"
+                                                       Margin="0,4,0,0"/>
+
+                                        </StackPanel>
+
+                                    </Grid>
+
+                                </DataTemplate>
+
+                            </ListBox.ItemTemplate>
+
+                        </ListBox>
+
+                    </Grid>
+
+                </Border>
+
+
+                <!-- EDITOR -->
+
+                <Border Grid.Column="4"
+                        CornerRadius="22"
+                        BorderBrush="#70CFA75B"
+                        BorderThickness="1.4"
+                        Background="#15120E"
+                        Padding="25">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="55"/>
+
+                            <RowDefinition Height="*"/>
+
+                        </Grid.RowDefinitions>
+
+
+                        <TextBlock Text="بيانات الجهاز"
+                                   Foreground="#E7C478"
+                                   FontSize="26"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Right"
+                                   FlowDirection="RightToLeft"/>
+
+
+                        <Grid Grid.Row="1">
+
+                            <Grid.ColumnDefinitions>
+
+                                <ColumnDefinition Width="*"/>
+
+                                <ColumnDefinition Width="24"/>
+
+                                <ColumnDefinition Width="330"/>
+
+                            </Grid.ColumnDefinitions>
+
+
+                            <!-- INFORMATION -->
+
+                            <ScrollViewer Grid.Column="0"
+                                          VerticalScrollBarVisibility="Hidden">
+
+                                <StackPanel FlowDirection="RightToLeft">
+
+                                    <TextBlock Text="اسم الجهاز"
+                                               Foreground="#BEB19A"
+                                               FontSize="15"
+                                               Margin="0,0,0,6"/>
+
+                                    <TextBox Text="{Binding SelectedItem.Name,
+                                                           ElementName=DeviceList,
+                                                           Mode=TwoWay,
+                                                           UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                                    <TextBlock Text="العنوان الفرعي"
+                                               Foreground="#BEB19A"
+                                               FontSize="15"
+                                               Margin="0,16,0,6"/>
+
+                                    <TextBox Text="{Binding SelectedItem.Subtitle,
+                                                           ElementName=DeviceList,
+                                                           Mode=TwoWay,
+                                                           UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                                    <TextBlock Text="الوصف"
+                                               Foreground="#BEB19A"
+                                               FontSize="15"
+                                               Margin="0,16,0,6"/>
+
+                                    <TextBox Height="90"
+                                             AcceptsReturn="True"
+                                             TextWrapping="Wrap"
+                                             VerticalContentAlignment="Top"
+                                             Text="{Binding SelectedItem.Description,
+                                                            ElementName=DeviceList,
+                                                            Mode=TwoWay,
+                                                            UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                                    <Grid Margin="0,16,0,0">
+
+                                        <Grid.ColumnDefinitions>
+
+                                            <ColumnDefinition Width="*"/>
+
+                                            <ColumnDefinition Width="12"/>
+
+                                            <ColumnDefinition Width="*"/>
+
+                                        </Grid.ColumnDefinitions>
+
+
+                                        <StackPanel Grid.Column="0">
+
+                                            <TextBlock Text="السنة"
+                                                       Foreground="#BEB19A"
+                                                       FontSize="15"
+                                                       Margin="0,0,0,6"/>
+
+                                            <TextBox Text="{Binding SelectedItem.Year,
+                                                                   ElementName=DeviceList,
+                                                                   Mode=TwoWay,
+                                                                   UpdateSourceTrigger=PropertyChanged}"/>
+
+                                        </StackPanel>
+
+
+                                        <StackPanel Grid.Column="2">
+
+                                            <TextBlock Text="الشركة"
+                                                       Foreground="#BEB19A"
+                                                       FontSize="15"
+                                                       Margin="0,0,0,6"/>
+
+                                            <TextBox Text="{Binding SelectedItem.Company,
+                                                                   ElementName=DeviceList,
+                                                                   Mode=TwoWay,
+                                                                   UpdateSourceTrigger=PropertyChanged}"/>
+
+                                        </StackPanel>
+
+                                    </Grid>
+
+
+                                    <Grid Margin="0,16,0,0">
+
+                                        <Grid.ColumnDefinitions>
+
+                                            <ColumnDefinition Width="*"/>
+
+                                            <ColumnDefinition Width="12"/>
+
+                                            <ColumnDefinition Width="*"/>
+
+                                        </Grid.ColumnDefinitions>
+
+
+                                        <StackPanel Grid.Column="0">
+
+                                            <TextBlock Text="النوع"
+                                                       Foreground="#BEB19A"
+                                                       FontSize="15"
+                                                       Margin="0,0,0,6"/>
+
+                                            <TextBox Text="{Binding SelectedItem.Type,
+                                                                   ElementName=DeviceList,
+                                                                   Mode=TwoWay,
+                                                                   UpdateSourceTrigger=PropertyChanged}"/>
+
+                                        </StackPanel>
+
+
+                                        <StackPanel Grid.Column="2">
+
+                                            <TextBlock Text="المادة"
+                                                       Foreground="#BEB19A"
+                                                       FontSize="15"
+                                                       Margin="0,0,0,6"/>
+
+                                            <TextBox Text="{Binding SelectedItem.Material,
+                                                                   ElementName=DeviceList,
+                                                                   Mode=TwoWay,
+                                                                   UpdateSourceTrigger=PropertyChanged}"/>
+
+                                        </StackPanel>
+
+                                    </Grid>
+
+                                </StackPanel>
+
+                            </ScrollViewer>
+
+
+                            <!-- MEDIA -->
+
+                            <StackPanel Grid.Column="2"
+                                        FlowDirection="RightToLeft">
+
+                                <TextBlock Text="صورة الجهاز"
+                                           Foreground="#BEB19A"
+                                           FontSize="16"
+                                           Margin="0,0,0,7"/>
+
+
+                                <Border Height="170"
+                                        CornerRadius="18"
+                                        BorderBrush="#85CFA75B"
+                                        BorderThickness="1.4"
+                                        Background="#19150F"
+                                        ClipToBounds="True">
+
+                                    <Grid>
+
+                                        <Image Source="{Binding SelectedItem.ImagePath,
+                                                                ElementName=DeviceList}"
+                                               Stretch="UniformToFill"/>
+
+
+                                        <TextBlock Text="لا توجد صورة"
+                                                   Foreground="#968A75"
+                                                   FontSize="16"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center">
+
+                                            <TextBlock.Style>
+
+                                                <Style TargetType="TextBlock">
+
+                                                    <Setter Property="Visibility"
+                                                            Value="Collapsed"/>
+
+                                                    <Style.Triggers>
+
+                                                        <DataTrigger Binding="{Binding SelectedItem.ImagePath,
+                                                                                      ElementName=DeviceList}"
+                                                                     Value="">
+
+                                                            <Setter Property="Visibility"
+                                                                    Value="Visible"/>
+
+                                                        </DataTrigger>
+
+                                                    </Style.Triggers>
+
+                                                </Style>
+
+                                            </TextBlock.Style>
+
+                                        </TextBlock>
+
+                                    </Grid>
+
+                                </Border>
+
+
+                                <Button Margin="0,8,0,0"
+                                        Style="{StaticResource ProjectButtonStyle}"
+                                        Content="اختيار / تغيير الصورة"
+                                        Click="ChooseImage_Click"/>
+
+
+                                <Button Margin="0,7,0,0"
+                                        Style="{StaticResource ProjectButtonStyle}"
+                                        Content="حذف الصورة"
+                                        Click="RemoveImage_Click"/>
+
+
+                                <TextBlock Text="فيديو الجهاز"
+                                           Foreground="#BEB19A"
+                                           FontSize="16"
+                                           Margin="0,12,0,7"/>
+
+
+                                <Border Height="52"
+                                        CornerRadius="14"
+                                        BorderBrush="#70CFA75B"
+                                        BorderThickness="1.3"
+                                        Background="#201C16"
+                                        Padding="12">
+
+                                    <TextBlock Text="{Binding SelectedItem.VideoFileName,
+                                                             ElementName=DeviceList}"
+                                               Foreground="White"
+                                               FontSize="15"
+                                               VerticalAlignment="Center"
+                                               TextTrimming="CharacterEllipsis"
+                                               FlowDirection="LeftToRight"/>
+
+                                </Border>
+
+
+                                <Button Margin="0,8,0,0"
+                                        Style="{StaticResource ProjectButtonStyle}"
+                                        Content="اختيار / تغيير الفيديو"
+                                        Click="ChooseVideo_Click"/>
+
+
+                                <Button Margin="0,7,0,0"
+                                        Style="{StaticResource ProjectButtonStyle}"
+                                        Content="حذف الفيديو"
+                                        Click="RemoveVideo_Click"/>
+
+                            </StackPanel>
+
+                        </Grid>
+
+                    </Grid>
+
+                </Border>
+
+            </Grid>
+
+
+            <!-- BOTTOM BUTTONS -->
+
+            <StackPanel Grid.Row="2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom">
+
+                
+                <!-- DEVICE CRUD BUTTONS START -->
+
+                <Button Width="190"
+                        Margin="0,0,14,0"
+                        Style="{StaticResource ProjectButtonStyle}"
+                        Content="+ إضافة جهاز"
+                        Click="AddDevice_Click"/>
+                <!-- DEVICE ORDER BUTTONS START -->
+
+                <Button Width="135"
+                        Margin="0,0,14,0"
+                        Style="{StaticResource ProjectButtonStyle}"
+                        Content="↑ لأعلى"
+                        Click="MoveDeviceUp_Click"/>
+
+                <Button Width="135"
+                        Margin="0,0,14,0"
+                        Style="{StaticResource ProjectButtonStyle}"
+                        Content="↓ لأسفل"
+                        Click="MoveDeviceDown_Click"/>
+
+                <!-- DEVICE ORDER BUTTONS END -->
+
+
+
+                <Button Width="190"
+                        Margin="0,0,14,0"
+                        Style="{StaticResource ProjectButtonStyle}"
+                        Content="حذف الجهاز"
+                        Click="DeleteDevice_Click"/>
+
+                <!-- DEVICE CRUD BUTTONS END -->
+<Button Width="190"
+                        Margin="0,0,14,0"
+                        Style="{StaticResource ProjectButtonStyle}"
+                        Content="إلغاء"
+                        Click="Cancel_Click"/>
+
+
+                <Button Width="230"
+                        Style="{StaticResource ProjectButtonStyle}"
+                        Content="حفظ التغييرات"
+                        Click="Save_Click"/>
+
+            </StackPanel>
+
+        </Grid>
+
+    </Border>
+
+</Window>
+
+
+
